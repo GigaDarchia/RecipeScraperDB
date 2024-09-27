@@ -42,7 +42,7 @@ class RecipeDatabase:
             {
                 "$group": {
                     "_id": None,
-                    "avg_steps": {"$avg": {"$size": "$etapebi"}}
+                    "avg_steps": {"$avg": {"$size": "$steps"}}
                 }
             }
         ]
@@ -61,7 +61,7 @@ class RecipeDatabase:
             {
                 "$group": {
                     "_id": "$title",
-                    "portions": {"$max": "$ulufebi"}
+                    "portions": {"$max": "$portions"}
                 }
             }
         ]
