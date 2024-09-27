@@ -104,7 +104,7 @@ class Scrapper:
         steps = {}
         steps_list = soup.find("div", attrs={"class": "lineList"}).find_all(recursive=False)
         for step in steps_list:
-            step_number = int(step.find("div", attrs={"class": "count"}).get_text())
+            step_number = step.find("div", attrs={"class": "count"}).get_text()
             step_description = step.find("p").get_text()
             steps[step_number] = step_description
         recipe["steps"] = steps
@@ -127,10 +127,3 @@ class Scrapper:
         recipe["subcategory"] = subcategory
 
         result.append(recipe)
-
-
-if __name__ == "__main__":
-    scraper = Scrapper()
-    result = scraper.scrap()
-    with open("output.json", "w", encoding="utf-8") as f:
-        json.dump(result, f, ensure_ascii=False, indent=4)
