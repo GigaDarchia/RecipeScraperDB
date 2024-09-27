@@ -42,7 +42,7 @@ class RecipeDatabase:
             {
                 "$group": {
                     "_id": None,
-                    "avg_steps": {"$avg": {"$size": "$steps"}}
+                    "avg_steps": {"$avg": {"$size": {"$objectToArray": "$steps"}}}
                 }
             }
         ]
@@ -59,16 +59,19 @@ class RecipeDatabase:
     def get_recipe_with_most_portions(self):
         pipeline = [
             {
-                "$group": {
-                    "_id": "$title",
-                    "portions": {"$max": "$portions"}
+                "$sort": {
+                    "portions": -1
                 }
+            },
+            {
+                "$limit": 1
             }
         ]
+
         try:
             result = list(self.collection.aggregate(pipeline))
             if result:
-                print(f"Recipe with most portions: {result[0]['_id']} - {result[0]['portions']} portions")
+                print(f"Recipe with most portions: {result[0]['title']} - {result[0]['portions']} portions")
             else:
                 print("No data found.")
         except PyMongoError as e:
@@ -102,3 +105,4 @@ class RecipeDatabase:
         except PyMongoError as e:
             print(f"Error while aggregating data: {e}")
         print("-" * 100)
+
