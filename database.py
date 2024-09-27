@@ -8,6 +8,7 @@ class RecipeDatabase:
         self.client = MongoClient("localhost", 27017)
         self.db = self.client[db_name]
         self.collection = self.db[collection_name]
+        self.collection.drop()
 
     def populate_collection(self, recipe_data: list):
         try:
