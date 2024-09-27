@@ -101,7 +101,7 @@ class RecipeDatabase:
                 print("Author with most recipes: ")
                 print(f"Author: {result[0]['_id']} | Number of recipes: {result[0]['recipeCount']}")
             else:
-                print("No data found")
+                print("No data found.")
         except PyMongoError as e:
             print(f"Error while aggregating data: {e}")
         print("-" * 100)
